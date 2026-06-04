@@ -1,0 +1,75 @@
+<xs:schema  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://spring.io/guides/gs-producing-web-service"
+            targetNamespace="http://spring.io/guides/gs-producing-web-service"
+            elementFormDefault="qualified">
+
+    <xs:element name="getDocumentsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="token" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getDocumentsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="message" type="xs:string"></xs:element>
+                <xs:element name="cfdi" type="tns:cfdi" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="sapDocumentsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="token" type="xs:string"/>
+                <xs:element name="document" type="tns:sapDocument" minOccurs="1" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="sapDocumentsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="message" type="xs:string"></xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="cfdi">
+        <xs:all>
+            <xs:element name="uuid" type="xs:string"/>
+            <xs:element name="tipo" type="xs:string"/>
+            <xs:element name="fecha" type="xs:string"/>
+            <xs:element name="folio" type="xs:string"/>
+            <xs:element name="serie" type="xs:string"/>
+            <xs:element name="monto" type="xs:double"/>
+            <xs:element name="emisor" type="xs:string"/>
+            <xs:element name="receptor" type="xs:string"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="sapDocument">
+        <xs:all><!--uuid-->
+            <xs:element name="sgtxt" type="xs:string" minOccurs="0" maxOccurs="1"/><!--estatusBusqueda-->
+            <xs:element name="bstat" type="xs:string" minOccurs="0" maxOccurs="1"/><!--sociedad-->
+            <xs:element name="bukrs" type="xs:string" minOccurs="0" maxOccurs="1"/><!--acreedor-->
+            <xs:element name="lifnr" type="xs:string" minOccurs="0" maxOccurs="1"/><!--grupoCuentas-->
+            <xs:element name="ktokk" type="xs:string" minOccurs="0" maxOccurs="1"/><!--numeroDocIM-->
+            <xs:element name="docim" type="xs:string" minOccurs="0" maxOccurs="1"/><!--claseDocIM-->
+            <xs:element name="clsim" type="xs:string" minOccurs="0" maxOccurs="1"/><!--estatusDocIM-->
+            <xs:element name="stsim" type="xs:string" minOccurs="0" maxOccurs="1"/><!--descEstatusDocIM-->
+            <xs:element name="dscim" type="xs:string" minOccurs="0" maxOccurs="1"/><!--numeroDocFI-->
+            <xs:element name="belnr" type="xs:string" minOccurs="0" maxOccurs="1"/><!--claseDocFI-->
+            <xs:element name="blart" type="xs:string" minOccurs="0" maxOccurs="1"/><!--fechaContabilizacion-->
+            <xs:element name="budat" type="xs:string" minOccurs="0" maxOccurs="1"/><!--referencia-->
+            <xs:element name="xblnr" type="xs:string" minOccurs="0" maxOccurs="1"/><!--moneda-->
+            <xs:element name="waers" type="xs:string" minOccurs="0" maxOccurs="1"/><!--viaPago-->
+            <xs:element name="zlsch" type="xs:string" minOccurs="0" maxOccurs="1"/><!--textoPosicion-->
+            <xs:element name="txtps" type="xs:string" minOccurs="0" maxOccurs="1"/><!--numeroDocCompensacion-->
+            <xs:element name="augbl" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        </xs:all>
+    </xs:complexType>
+
+</xs:schema>

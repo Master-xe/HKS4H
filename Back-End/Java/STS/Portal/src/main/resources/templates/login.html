@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Login</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+        <link href="css/signin.css" rel="stylesheet" crossorigin="anonymous"/>
+    </head>
+    <body>
+        <div class="container">
+            <form class="form-signin" th:action="@{/login}" method="post">
+                <h2 class="form-signin-heading">Portal Heineken</h2>
+                <p>
+                    <label for="username" class="sr-only">Usuario</label>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Usuario" required autofocus>
+                </p>
+                <p>
+                    <label for="password" class="sr-only">Contraseña</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña" required>
+                </p>
+                <div th:if="${param.error}" class="alert alert-danger" role="alert">Usuario o Contraseña Inválido</div>
+                <div th:if="${param.logout}" class="alert alert-danger" role="alert">Sesión Terminada</div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar Sesión</button>
+            </form>
+        </div>
+    </body>
+</html>

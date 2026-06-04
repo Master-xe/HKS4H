@@ -1,0 +1,56 @@
+
+use portalcfdi;
+
+DROP PROCEDURE IF EXISTS catalogs;
+DROP PROCEDURE IF EXISTS user_auth;
+DROP PROCEDURE IF EXISTS users_view;
+DROP PROCEDURE IF EXISTS user_delete;
+DROP PROCEDURE IF EXISTS user_insert;
+DROP PROCEDURE IF EXISTS user_update;
+DROP PROCEDURE IF EXISTS respond_list;
+DROP PROCEDURE IF EXISTS settings_view;
+DROP PROCEDURE IF EXISTS setting_insert;
+DROP PROCEDURE IF EXISTS company_delete;
+DROP PROCEDURE IF EXISTS company_insert;
+DROP PROCEDURE IF EXISTS company_update;
+DROP PROCEDURE IF EXISTS companies_view;
+DROP PROCEDURE IF EXISTS password_reused;
+DROP PROCEDURE IF EXISTS unzip_downloads;
+DROP PROCEDURE IF EXISTS metadata_insert;
+DROP PROCEDURE IF EXISTS crequest_insert;
+DROP PROCEDURE IF EXISTS rrequest_insert;
+DROP PROCEDURE IF EXISTS respond_request;
+DROP PROCEDURE IF EXISTS respond_requests;
+DROP PROCEDURE IF EXISTS saparchived_view;
+DROP PROCEDURE IF EXISTS unzipped_download;
+DROP PROCEDURE IF EXISTS sapdocument_insert;
+DROP PROCEDURE IF EXISTS saparchived_insert;
+DROP PROCEDURE IF EXISTS saparchived_select;
+DROP PROCEDURE IF EXISTS cancellations_view;
+DROP PROCEDURE IF EXISTS cancellation_insert;
+DROP PROCEDURE IF EXISTS cancellations_viewsap;
+
+DROP FUNCTION IF EXISTS fn_SAPEval;
+DROP FUNCTION IF EXISTS fn_getRndNum;
+DROP FUNCTION IF EXISTS fn_KoneshEval;
+DROP FUNCTION IF EXISTS fn_getNewStatus;
+DROP FUNCTION IF EXISTS fn_KoneshAndSAPEval;
+
+DROP TABLE IF EXISTS crones;
+DROP TABLE IF EXISTS metadata;
+DROP TABLE IF EXISTS downloads;
+DROP TABLE IF EXISTS saparchived;
+DROP TABLE IF EXISTS sapdocuments;
+DROP TABLE IF EXISTS cancellations;
+DROP TABLE IF EXISTS ccfdirequests;
+DROP TABLE IF EXISTS uuidrequests;
+DROP TABLE IF EXISTS cresponses;
+DROP TABLE IF EXISTS crequests;
+DROP TABLE IF EXISTS companies;
+DROP TABLE IF EXISTS passwords;
+DROP TABLE IF EXISTS settings;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS profiles;
+
+DROP DATABASE IF EXISTS portalcfdi;
+DROP USER IF EXISTS 'portaluser'@'localhost';
