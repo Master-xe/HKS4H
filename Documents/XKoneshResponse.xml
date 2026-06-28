@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<soapenv:Envelope xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope">
+    <soapenv:Body>
+        <ns:obtieneInfoCFDIsResponse xmlns:ns="http://kwservice.heineken.mx.konesh.com">
+            <ns:return xmlns:ax213="http://beans.kwservice.heineken.mx.konesh.com/xsd" xmlns:ax211="http://pool2.db.mx.konesh.com/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ax213:ResultadoCFDI">
+                <ax213:cfdis xsi:type="ax213:CFDIRecepcion">
+                    <ax213:estatus>CONTABILIZADO</ax213:estatus>
+                    <ax213:fechaDoc>20251105</ax213:fechaDoc>
+                    <ax213:folio>834218</ax213:folio>
+                    <ax213:mensaje>000009639456 - 083 51002425032025</ax213:mensaje>
+                    <ax213:moneda>MXN</ax213:moneda>
+                    <ax213:numPedido>6170508949</ax213:numPedido>
+                    <ax213:resultadoFinal>ACEPTADO</ax213:resultadoFinal>
+                    <ax213:rfcEmisor>MTV760226G73</ax213:rfcEmisor>
+                    <ax213:rfcReceptor>CCM010710UU1</ax213:rfcReceptor>
+                    <ax213:serie>NCB</ax213:serie>
+                    <ax213:tipoDocumento>I</ax213:tipoDocumento>
+                    <ax213:tipoProceso>01</ax213:tipoProceso>
+                    <ax213:total>90270.590000</ax213:total>
+                    <ax213:uuid>5E0212AF-3308-4B7B-911F-F273B11B58BA</ax213:uuid>
+                </ax213:cfdis>
+                <ax213:cfdis xsi:type="ax213:CFDIRecepcion">
+                    <ax213:estatus xsi:nil="true" />
+                    <ax213:fechaDoc xsi:nil="true" />
+                    <ax213:folio xsi:nil="true" />
+                    <ax213:mensaje xsi:nil="true" />
+                    <ax213:moneda xsi:nil="true" />
+                    <ax213:numPedido xsi:nil="true" />
+                    <ax213:resultadoFinal>NA</ax213:resultadoFinal>
+                    <ax213:rfcEmisor xsi:nil="true" />
+                    <ax213:rfcReceptor xsi:nil="true" />
+                    <ax213:serie xsi:nil="true" />
+                    <ax213:tipoDocumento xsi:nil="true" />
+                    <ax213:tipoProceso xsi:nil="true" />
+                    <ax213:total xsi:nil="true" />
+                    <ax213:uuid>C639540F-CBEC-45C1-8F3E-1353EB7F45F3</ax213:uuid>
+                </ax213:cfdis>
+            </ns:return>
+        </ns:obtieneInfoCFDIsResponse>
+    </soapenv:Body>
+</soapenv:Envelope>

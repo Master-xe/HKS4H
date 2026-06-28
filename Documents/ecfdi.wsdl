@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://spring.io/guides/gs-producing-web-service" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://spring.io/guides/gs-producing-web-service" targetNamespace="http://spring.io/guides/gs-producing-web-service">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://spring.io/guides/gs-producing-web-service">
+
+    <xs:element name="getDocumentsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="token" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getDocumentsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="message" type="xs:string"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="cfdi" type="tns:cfdi"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="sapDocumentsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="token" type="xs:string"/>
+                <xs:element maxOccurs="unbounded" minOccurs="1" name="document" type="tns:sapDocument"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="sapDocumentsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="message" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="cfdi">
+        <xs:all>
+            <xs:element name="uuid" type="xs:string"/>
+            <xs:element name="tipo" type="xs:string"/>
+            <xs:element name="fecha" type="xs:string"/>
+            <xs:element name="folio" type="xs:string"/>
+            <xs:element name="serie" type="xs:string"/>
+            <xs:element name="monto" type="xs:double"/>
+            <xs:element name="emisor" type="xs:string"/>
+            <xs:element name="receptor" type="xs:string"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="sapDocument">
+        <xs:all><!--uuid-->
+            <xs:element maxOccurs="1" minOccurs="0" name="sgtxt" type="xs:string"/><!--estatusBusqueda-->
+            <xs:element maxOccurs="1" minOccurs="0" name="bstat" type="xs:string"/><!--sociedad-->
+            <xs:element maxOccurs="1" minOccurs="0" name="bukrs" type="xs:string"/><!--acreedor-->
+            <xs:element maxOccurs="1" minOccurs="0" name="lifnr" type="xs:string"/><!--grupoCuentas-->
+            <xs:element maxOccurs="1" minOccurs="0" name="ktokk" type="xs:string"/><!--numeroDocIM-->
+            <xs:element maxOccurs="1" minOccurs="0" name="docim" type="xs:string"/><!--claseDocIM-->
+            <xs:element maxOccurs="1" minOccurs="0" name="clsim" type="xs:string"/><!--estatusDocIM-->
+            <xs:element maxOccurs="1" minOccurs="0" name="stsim" type="xs:string"/><!--descEstatusDocIM-->
+            <xs:element maxOccurs="1" minOccurs="0" name="dscim" type="xs:string"/><!--numeroDocFI-->
+            <xs:element maxOccurs="1" minOccurs="0" name="belnr" type="xs:string"/><!--claseDocFI-->
+            <xs:element maxOccurs="1" minOccurs="0" name="blart" type="xs:string"/><!--fechaContabilizacion-->
+            <xs:element maxOccurs="1" minOccurs="0" name="budat" type="xs:string"/><!--referencia-->
+            <xs:element maxOccurs="1" minOccurs="0" name="xblnr" type="xs:string"/><!--moneda-->
+            <xs:element maxOccurs="1" minOccurs="0" name="waers" type="xs:string"/><!--viaPago-->
+            <xs:element maxOccurs="1" minOccurs="0" name="zlsch" type="xs:string"/><!--textoPosicion-->
+            <xs:element maxOccurs="1" minOccurs="0" name="txtps" type="xs:string"/><!--numeroDocCompensacion-->
+            <xs:element maxOccurs="1" minOccurs="0" name="augbl" type="xs:string"/>
+        </xs:all>
+    </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getDocumentsRequest">
+    <wsdl:part element="tns:getDocumentsRequest" name="getDocumentsRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDocumentsResponse">
+    <wsdl:part element="tns:getDocumentsResponse" name="getDocumentsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sapDocumentsRequest">
+    <wsdl:part element="tns:sapDocumentsRequest" name="sapDocumentsRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sapDocumentsResponse">
+    <wsdl:part element="tns:sapDocumentsResponse" name="sapDocumentsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="DocumentsPort">
+    <wsdl:operation name="getDocuments">
+      <wsdl:input message="tns:getDocumentsRequest" name="getDocumentsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:getDocumentsResponse" name="getDocumentsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sapDocuments">
+      <wsdl:input message="tns:sapDocumentsRequest" name="sapDocumentsRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:sapDocumentsResponse" name="sapDocumentsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DocumentsPortSoap11" type="tns:DocumentsPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getDocuments">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="getDocumentsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getDocumentsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sapDocuments">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="sapDocumentsRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="sapDocumentsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DocumentsPortService">
+    <wsdl:port binding="tns:DocumentsPortSoap11" name="DocumentsPortSoap11">
+      <soap:address location="https://canpro-4.com:8443/ws"/> <!-- https://canpro-4.com:8443/ws/cfdis.wsdl -->
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

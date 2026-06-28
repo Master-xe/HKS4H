@@ -1,0 +1,15 @@
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:kws="http://kwservice.heineken.mx.konesh.com" xmlns:xsd="http://beans.kwservice.heineken.mx.konesh.com/xsd">
+    <soap:Header/> <!-- https://heineken.cfdinova.com.mx/axis2/services/KWSInformacionComplementariaSAPECC -->
+    <soap:Body>
+        <kws:obtieneInfoCFDIs>
+            <kws:consultaCfdis>
+                <xsd:cfdis>
+                    <xsd:uuid>5E0212AF-3308-4B7B-911F-F273B11B58BA</xsd:uuid>
+                </xsd:cfdis>
+                <xsd:cfdis>
+                    <xsd:uuid>C639540F-CBEC-45C1-8F3E-1353EB7F45F3</xsd:uuid>
+                </xsd:cfdis>
+            </kws:consultaCfdis>
+        </kws:obtieneInfoCFDIs>
+    </soap:Body>
+</soap:Envelope>

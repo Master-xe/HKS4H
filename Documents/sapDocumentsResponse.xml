@@ -1,0 +1,8 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <SOAP-ENV:Header/>
+    <SOAP-ENV:Body>
+        <ns2:sapDocumentsResponse xmlns:ns2="http://spring.io/guides/gs-producing-web-service">
+            <ns2:message>Access Denied</ns2:message>
+        </ns2:sapDocumentsResponse>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

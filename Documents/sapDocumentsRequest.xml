@@ -1,0 +1,29 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:gs="http://spring.io/guides/gs-producing-web-service">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <gs:sapDocumentsRequest>
+            <gs:token>?</gs:token>
+            <!--1 or more repetitions:-->
+            <gs:document>
+                <!--You may enter the following 17 items in any order-->
+                <gs:sgtxt>?</gs:sgtxt>
+                <gs:bstat>?</gs:bstat>
+                <gs:bukrs>?</gs:bukrs>
+                <gs:lifnr>?</gs:lifnr>
+                <gs:ktokk>?</gs:ktokk>
+                <gs:docim>?</gs:docim>
+                <gs:clsim>?</gs:clsim>
+                <gs:stsim>?</gs:stsim>
+                <gs:dscim>?</gs:dscim>
+                <gs:belnr>?</gs:belnr>
+                <gs:blart>?</gs:blart>
+                <gs:budat>?</gs:budat>
+                <gs:xblnr>?</gs:xblnr>
+                <gs:waers>?</gs:waers>
+                <gs:zlsch>?</gs:zlsch>
+                <gs:txtps>?</gs:txtps>
+                <gs:augbl>?</gs:augbl>
+            </gs:document>
+        </gs:sapDocumentsRequest>
+    </soapenv:Body>
+</soapenv:Envelope>

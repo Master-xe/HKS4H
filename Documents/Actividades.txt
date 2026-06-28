@@ -1,0 +1,37 @@
+Fase 0 -> Análisis (2 Semanas)
+* Levantamiento de Requerimientos:
+  - Análisis y revisión de la solución actual para determinar/detectar afectaciones en flujo, reglas, comunicación, código y base de datos.
+     ° Verificación/Revisión/Validación matríz de reglas de negocio definidas.(Heineken/Líder)
+     ° Definición de comunicación con Konesh para recibir información.(Arquitecto/Konesh)
+     ° Validación de Cyphers soportados en SAP S4/Hana.(Heineken/Deloitte)
+     ° Definición de tecnologías/protocolos(PI/CPI, SOAP/API/REST) de comunicación entre S4/Hana y CanPro.(Arquitecto/Heineken/Deloitte)
+
+Fase 1 -> Ejecución (10 Semanas)
+* Desarrollo de funcionalidad para escenario alterno para la administración de solicitudes de aceptación de cancelación de CFDIs de proveedores de Heineken con SAP S4/Hana
+  - Diseño técnico de la aplicación.(Arquitecto)
+  - Módulo Konesh.
+    ° Desarrollo de interfaz de comunicación para recibir información de S4/Hana.(Desarrollador Java/Konesh)
+    ° Desarrollo de estructura en base de datos(Tablas, Procedimientos Almacenados).(DBA)
+    ° Desarrollo e integración de nuevas reglas de evaluación en primera etapa.(Desarrollador Java/DBA)
+  - Módulo SAP ECC/S4/Hana.
+    ° Desarrollo de interfaces de comunicación para SAP S4/Hana.(Desarrollador Java)
+    ° Desarrollo de estructura en base de datos(Tablas, Procedimientos Almacenados).(DBA)
+    ° Desarrollo e integración de nuevas reglas de evaluación en segunda etapa.(Desarrollador Java/DBA)
+  - Diseño de control de flujo entre versiones de ERP/SAP por entidad según corresponda.(Desarrollador Java)
+  - Modificación de interfaces de usuario para ver información adicional de SAP S4/Hana.(Desarrollador Front-End)
+  - Pruebas Unitarias.(Desarrolladores Java/Front-End y DBA)
+
+Fase 2 -> Pruebas Integrales. (3 Semanas)
+* Ejecución de Pruebas Integrales.
+  - Preparación de Ambiente de Pruebas.(Administrador de Servidores)
+  - Creación de escenarios bajo matríz de reglas.(Heineken)
+  - Ajustes/Correcciones si aplica o según corresponda.
+  - Aceptación de pruebas.(Heineken)
+
+Fase 3 -> Go-Live (1 Semana)
+* Salida a Producción
+  - Respaldo de Ambiente Productivo.(Administrador de Servidores)
+  - Despliegue en Producción. (Administrador de Servidores)
+
+Fase 4 -> Pos Producción
+* Monitoreo intensivo
