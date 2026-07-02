@@ -6,23 +6,23 @@
             <!--1 or more repetitions:-->
             <gs:document>
                 <!--You may enter the following 17 items in any order-->
-                <gs:sgtxt>?</gs:sgtxt>
-                <gs:bstat>?</gs:bstat>
-                <gs:bukrs>?</gs:bukrs>
-                <gs:lifnr>?</gs:lifnr>
-                <gs:ktokk>?</gs:ktokk>
-                <gs:docim>?</gs:docim>
-                <gs:clsim>?</gs:clsim>
-                <gs:stsim>?</gs:stsim>
-                <gs:dscim>?</gs:dscim>
-                <gs:belnr>?</gs:belnr>
-                <gs:blart>?</gs:blart>
-                <gs:budat>?</gs:budat>
-                <gs:xblnr>?</gs:xblnr>
-                <gs:waers>?</gs:waers>
-                <gs:zlsch>?</gs:zlsch>
-                <gs:txtps>?</gs:txtps>
-                <gs:augbl>?</gs:augbl>
+                <gs:sgtxt>?</gs:sgtxt> <!-- UUID del documento -->
+                <gs:bstat>?</gs:bstat> <!-- estatusBusqueda, Resultado de la búsqueda: N -> Ningúno, S -> Single, M -> Múltiple -->
+                <gs:bukrs>?</gs:bukrs> <!-- sociedad, Entidad a la que corresponde el documento -->
+                <gs:lifnr>?</gs:lifnr> <!-- acreedor, Proveedor al que corresponde el documento -->
+                <gs:ktokk>?</gs:ktokk> <!-- grupoCuentas, Grupo de Cuenta al que pertenece -->
+                <gs:docim>?</gs:docim> <!-- numeroDocIM, Número de Documento en IM -->
+                <gs:clsim>?</gs:clsim> <!-- claseDocIM, Clasificación del Documento en IM -->
+                <gs:stsim>?</gs:stsim> <!-- estatusDocIM, Estatus del Documento en IM -->
+                <gs:dscim>?</gs:dscim> <!-- descEstatusDocIM, Descripción del Documento en IM -->
+                <gs:belnr>?</gs:belnr> <!-- numeroDocFI, Número de Documento Financiero -->
+                <gs:blart>?</gs:blart> <!-- claseDocFI, Clasificación del Documento Financiero -->
+                <gs:budat>?</gs:budat> <!-- fechaContabilizacion, Fecha en que se contabilizó -->
+                <gs:xblnr>?</gs:xblnr> <!-- referencia, Referencia del Documento -->
+                <gs:waers>?</gs:waers> <!-- moneda, Tipo de Moneda: USD, MXN, etc. -->
+                <gs:zlsch>?</gs:zlsch> <!-- viaPago, Vía de Pago -->
+                <gs:txtps>?</gs:txtps> <!-- textoPosicion -->
+                <gs:augbl>?</gs:augbl> <!-- numeroDocCompensacion, Número de Documento Relacionado si está Compensado-->
             </gs:document>
         </gs:sapDocumentsRequest>
     </soapenv:Body>
