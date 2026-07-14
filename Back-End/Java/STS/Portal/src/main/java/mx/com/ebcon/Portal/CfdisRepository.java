@@ -37,6 +37,12 @@ public class CfdisRepository
         return cfdis;
     }
 
+    public List<Cfdi> getCfdisS4()
+    {
+        genCfdis();
+        return cfdis;
+    }
+
     private void genCfdis()
     {
         try

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import io.spring.guides.gs_producing_web_service.Cfdi;
 import io.spring.guides.gs_producing_web_service.SapDocument;
+import io.spring.guides.gs_producing_web_service.SapDocumentS4;
 
 @Repository
 public class CancellationsRepository
@@ -70,6 +71,63 @@ public class CancellationsRepository
     }
 
     public boolean saveSAPDocuments(Connection connection, List<SapDocument> documents)
+    {
+        this.code = 0;
+        this.error = null;
+
+        String errorlog = null;
+        CallableStatement sp = null;
+
+        try
+        {
+            sp = connection.prepareCall("{call sapdocument_insert(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+        }   catch(SQLException e)
+        {
+            this.code = e.getErrorCode();
+            this.error = e.getMessage();
+            return false;
+        }   errorlog = "";
+
+        for(int i=0; i<documents.size(); i++)
+        {
+            try
+            {
+                sp.setString("augbl", documents.get(i).getAugbl());
+                sp.setString("belnr", documents.get(i).getBelnr());
+                sp.setString("blart", documents.get(i).getBlart());
+                sp.setString("bstat", documents.get(i).getStsim());
+                sp.setString("budat", documents.get(i).getBudat());
+                sp.setString("bukrs", documents.get(i).getBukrs());
+                sp.setString("ktokk", documents.get(i).getKtokk());
+                sp.setString("lifnr", documents.get(i).getLifnr());
+                sp.setString("sgtxt", documents.get(i).getTxtps());
+                sp.setString("sstat", documents.get(i).getBstat());
+                sp.setString("waers", documents.get(i).getWaers());
+                sp.setString("xblnr", documents.get(i).getXblnr());
+                sp.setString("zlsch", documents.get(i).getZlsch());
+                sp.setString("ibelnr", documents.get(i).getDocim());
+                sp.setString("iblart", documents.get(i).getClsim());
+                sp.setString("isgtxt", documents.get(i).getDscim());
+                sp.setString("yuud", documents.get(i).getSgtxt().toUpperCase());
+                sp.executeUpdate();
+            }   catch(SQLException e)
+            {
+                errorlog += documents.get(i).getSgtxt() + ",";
+                Utils.write("documents", documents.get(i).getSgtxt() + ":" + e.getMessage());
+            }
+        }
+
+        if( errorlog.isEmpty() )
+        {
+            return true;
+        }   else
+        {
+            this.error = errorlog.substring(0, errorlog.length() - 1);
+            return false;
+        }
+    }
+
+    public boolean saveSAPDocumentsS4(Connection connection, List<SapDocumentS4> documents)
     {
         this.code = 0;
         this.error = null;
