@@ -1,0 +1,9 @@
+Escenarios aplicables a la solución para filtrar los registros correspondientes de la sociedad SIX(169) en SAP S4/HAANA.
+
+Clonar procedimiento almacenado cancellations_viewsap() y aplicar la lógica en cada uno para filtrar los registros.
+
+Agregar un campo en la tabla de las sociedades que indique en qué ambiente de SAP reside(ECC/S4H).
+
+Integrar una variable en el procedimiento almacenado cancellations_viewsap() para filtrar.
+
+Modificar sentencia SQL para filtrar mediante variable o aplicar directamente por la sociedad SIX(169).
