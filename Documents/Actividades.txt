@@ -1,6 +1,6 @@
 Fase 0 -> Análisis (2 Semanas)
 * Levantamiento de Requerimientos:
-  - Análisis y revisión de la solución actual para determinar/detectar afectaciones en flujo, reglas, comunicación, código y base de datos.
+  - Análisis y revisión de la solución actual para determinar/detectar afectaciones en flujo, reglas, comunicación y base de datos.
      ° Verificación/Revisión/Validación matríz de reglas de negocio definidas.(Heineken/Líder)
      ° Definición de comunicación con Konesh para recibir información.(Arquitecto/Konesh)
      ° Validación de Cyphers soportados en SAP S4/Hana.(Heineken/Deloitte)

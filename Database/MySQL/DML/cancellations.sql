@@ -95,31 +95,59 @@ END $$
 DELIMITER ;
 
 DELIMITER $$
-CREATE DEFINER = 'portaluser'@'localhost' PROCEDURE cancellations_viewsap()
+CREATE DEFINER = 'portaluser'@'localhost' PROCEDURE cancellations_viewsap
+(
+    IN sapver   VARCHAR(4)
+)
 BEGIN
 
     SELECT
-        cfdiuuid,
-        IF( ISNULL(koneshdata.docDate) OR (LENGTH(TRIM(koneshdata.docDate)) = 0), metadata.issueDate, koneshdata.docDate) AS issueDate,
-        IF( ISNULL(koneshdata.docType) OR (LENGTH(TRIM(koneshdata.docType)) = 0), metadata.cfditype, koneshdata.docType) AS cfditype,
-        IF( ISNULL(koneshdata.emiRFC) OR (LENGTH(TRIM(koneshdata.emiRFC)) = 0), metadata.rfcEmitter, koneshdata.emiRFC) AS rfcEmitter,
-        IF( ISNULL(koneshdata.recRFC) OR (LENGTH(TRIM(koneshdata.recRFC)) = 0), metadata.rfcReceiver, koneshdata.recRFC) AS rfcReceiver,
-        IF( ISNULL(koneshdata.folio) OR (LENGTH(TRIM(koneshdata.folio)) = 0), metadata.folio, koneshdata.folio) AS folio,
-        IF( ISNULL(koneshdata.serie) OR (LENGTH(TRIM(koneshdata.serie)) = 0), metadata.serie, koneshdata.serie) AS serie,
-        IF( koneshdata.total > 0, koneshdata.total, metadata.amount ) AS amount
+        c.cfdiuuid,
+        k.docDate   AS issueDate,
+        k.docType   AS cfditype,
+        k.emiRFC    AS rfcEmitter,
+        k.recRFC    AS rfcReceiver,
+        k.folio,
+        k.serie,
+        k.total     AS amount
     FROM
-        cancellations
-    LEFT JOIN
-        koneshdata ON koneshdata.uuid = cfdiuuid
-    LEFT JOIN
-        metadata ON metadata.uuid = cfdiuuid
+        cancellations c
+    INNER JOIN
+        koneshdata k ON k.uuid = c.cfdiuuid
     WHERE
-        response = 'Pendiente'
+        c.response = 'Pendiente'
     AND
-        curstage = 'PAC'
+        c.curstage = 'PAC'
     AND
-        cancellations.status IN(1,12);
+        c.status IN(1,12)
+    AND
+        k.recRFC IN(SELECT crfc FROM companies WHERE sapversion = sapver)
+
+    UNION ALL
+
+    SELECT
+        c.cfdiuuid,
+        m.issueDate,
+        m.cfditype,
+        m.rfcEmitter,
+        m.rfcReceiver,
+        m.folio,
+        m.serie,
+        m.amount
+    FROM
+        cancellations c
+    INNER JOIN
+        metadata m ON m.uuid = c.cfdiuuid
+    LEFT JOIN
+        koneshdata k ON k.uuid = c.cfdiuuid
+    WHERE
+        c.response = 'Pendiente'
+    AND
+        c.curstage = 'PAC'
+    AND
+        c.status IN(1,12)
+    AND
+        m.rfcReceiver IN(SELECT crfc FROM companies WHERE sapversion = sapver);
 
 END $$
 DELIMITER ;
-

@@ -1,9 +1,179 @@
-Escenarios aplicables a la solución para filtrar los registros correspondientes de la sociedad SIX(169) en SAP S4/HAANA.
 
-Clonar procedimiento almacenado cancellations_viewsap() y aplicar la lógica en cada uno para filtrar los registros.
+1.- Verificación de diferencias y homologación de ambientes:
 
-Agregar un campo en la tabla de las sociedades que indique en qué ambiente de SAP reside(ECC/S4H).
+2.- Clonación/Resplado de la Base de Datos en Producción:
 
-Integrar una variable en el procedimiento almacenado cancellations_viewsap() para filtrar.
+    2.1- Estrcutura y Procedimientos Almacenados:
 
-Modificar sentencia SQL para filtrar mediante variable o aplicar directamente por la sociedad SIX(169).
+        mysqldump --host=localhost --port=3306 --default-character-set=utf8 --column-statistics=FALSE --routines --skip-triggers --skip-add-drop-table --no-data --databases portalcfdi --user root -p > TablesStructureAndStoredProcedures.sql
+
+    2.2- Datos/Información segmentados por tabla
+
+        mysqldump --host=localhost --port=3306 --default-character-set=utf8 --column-statistics=FALSE --no-create-info=TRUE --skip-triggers --skip-comments --verbose portalcfdi cancellations --user root -p > cancellations.sql
+        mysqldump --host=localhost --port=3306 --default-character-set=utf8 --column-statistics=FALSE --no-create-info=TRUE --skip-triggers --skip-comments --verbose portalcfdi ccfdirequests --user root -p > ccfdirequests.sql
+        mysqldump --host=localhost --port=3306 --default-character-set=utf8 --column-statistics=FALSE --no-create-info=TRUE --skip-triggers --skip-comments --verbose portalcfdi companies --user root -p > companies.sql
+        mysqldump --host=localhost --port=3306 --default-character-set=utf8 --column-statistics=FALSE --no-create-info=TRUE --skip-triggers --skip-comments --verbose portalcfdi crequests --user root -p > crequests.sql
+        mysqldump --host=localhost --port=3306 --default-character-set=utf8 --column-statistics=FALSE --no-create-info=TRUE --skip-triggers --skip-comments --verbose portalcfdi cresponses --user root -p > cresponses.sql
+        mysqldump --host=localhost --port=3306 --default-character-set=utf8 --column-statistics=FALSE --no-create-info=TRUE --skip-triggers --skip-comments --verbose portalcfdi crones --user root -p > crones.sql
+        mysqldump --host=localhost --port=3306 --default-character-set=utf8 --column-statistics=FALSE --no-create-info=TRUE --skip-triggers --skip-comments --verbose portalcfdi cronesexec --user root -p > cronesexec.sql
+        mysqldump --host=localhost --port=3306 --default-character-set=utf8 --column-statistics=FALSE --no-create-info=TRUE --skip-triggers --skip-comments --verbose portalcfdi downloads --user root -p > downloads.sql
+        mysqldump --host=localhost --port=3306 --default-character-set=utf8 --column-statistics=FALSE --no-create-info=TRUE --skip-triggers --skip-comments --verbose portalcfdi koneshdata --user root -p > koneshdata.sql
+        mysqldump --host=localhost --port=3306 --default-character-set=utf8 --column-statistics=FALSE --no-create-info=TRUE --skip-triggers --skip-comments --verbose portalcfdi koneshrequests --user root -p > koneshrequests.sql
+        mysqldump --host=localhost --port=3306 --default-character-set=utf8 --column-statistics=FALSE --no-create-info=TRUE --skip-triggers --skip-comments --verbose portalcfdi metadata --user root -p > metadata.sql
+        mysqldump --host=localhost --port=3306 --default-character-set=utf8 --column-statistics=FALSE --no-create-info=TRUE --skip-triggers --skip-comments --verbose portalcfdi passwords --user root -p > passwords.sql
+        mysqldump --host=localhost --port=3306 --default-character-set=utf8 --column-statistics=FALSE --no-create-info=TRUE --skip-triggers --skip-comments --verbose portalcfdi profiles --user root -p > profiles.sql
+        mysqldump --host=localhost --port=3306 --default-character-set=utf8 --column-statistics=FALSE --no-create-info=TRUE --skip-triggers --skip-comments --verbose portalcfdi saparchived --user root -p > saparchived.sql
+        mysqldump --host=localhost --port=3306 --default-character-set=utf8 --column-statistics=FALSE --no-create-info=TRUE --skip-triggers --skip-comments --verbose portalcfdi sapdocuments --user root -p > sapdocuments.sql
+        mysqldump --host=localhost --port=3306 --default-character-set=utf8 --column-statistics=FALSE --no-create-info=TRUE --skip-triggers --skip-comments --verbose portalcfdi settings --user root -p > settings.sql
+        mysqldump --host=localhost --port=3306 --default-character-set=utf8 --column-statistics=FALSE --no-create-info=TRUE --skip-triggers --skip-comments --verbose portalcfdi users --user root -p > users.sql
+        mysqldump --host=localhost --port=3306 --default-character-set=utf8 --column-statistics=FALSE --no-create-info=TRUE --skip-triggers --skip-comments --verbose portalcfdi uuidrequests --user root -p > uuidrequests.sql
+        mysqldump --host=localhost --port=3306 --default-character-set=utf8 --column-statistics=FALSE --no-create-info=TRUE --skip-triggers --skip-comments --verbose portalcfdi verifications --user root -p > verifications.sql
+
+    2.3- Ejecución del respaldo en el siguiente órden:
+
+        SET GLOBAL log_bin_trust_function_creators = 1;
+        -- Lo anterior es para que permita agregar correctamente las funciones: fn_getNewStatus, fn_SAPEval, fn_KoneshEval, fn_KoneshAndSAPEval.
+        source TablesStructureAndStoredProcedures.sql
+
+        source profiles.sql
+        source users.sql
+        source passwords.sql
+
+
+        source companies.sql
+        source crequests.sql
+        source cancellations.sql
+        source cresponses.sql
+        source downloads.sql
+        source metadata.sql
+        source settings.sql
+
+
+        source saparchived.sql
+        source sapdocuments.sql
+
+
+        source crones.sql
+        source cronesexec.sql
+        source uuidrequests.sql
+        source ccfdirequests.sql
+        source koneshrequests.sql
+        source koneshdata.sql
+        source verifications.sql
+
+3.- Solución:
+
+    Se agregó un campo adicional a la tabla portalcfdi.companies para clasificar cada sociedad en qué versión del ERP/SAP está implementada.
+    De esta forma facilitará del lado de CanPro cambiar el flujo para las demás entidades, cuando sean migradas a la nueva versión de SAP S4/Hana, siempre y cuando se mantengan exactamente las mismas condiciones de este requerimiento.
+    No se agregará esta opción a nivel de interfaz de usuario, debido a que debe ser un cambio controlado. Para el caso de dar de alta una nueva sociedad, se asignará por default ECC.
+    Valdría la pena la negociación para dar de alta nuevas entidades/sociedades, por el consumo de las peticiones con el PAC/Connexial.
+
+    ALTER TABLE portalcfdi.companies ADD COLUMN sapversion ENUM('ECC','S4H') NOT NULL DEFAULT 'ECC';
+
+    UPDATE portalcfdi.companies SET sapversion = 'S4H' WHERE crfc = 'CNC820428674';
+
+    * Actualizar procedimiento almacenado company_insert para agregar por default ECC al dar de alta una nueva empresa.
+    * Actulizar script companies.sql correspondiente a la creación de la tabla de empresas con el nuevo campo sapversion.
+
+    Procedimiento Almacenado Actual y Adaptación:
+
+    DELIMITER $$
+    CREATE DEFINER = 'portaluser'@'localhost' PROCEDURE cancellations_viewsap()
+    BEGIN
+
+        SELECT
+            cfdiuuid,
+            IF( ISNULL(koneshdata.docDate) OR (LENGTH(TRIM(koneshdata.docDate)) = 0), metadata.issueDate, koneshdata.docDate) AS issueDate,
+            IF( ISNULL(koneshdata.docType) OR (LENGTH(TRIM(koneshdata.docType)) = 0), metadata.cfditype, koneshdata.docType) AS cfditype,
+            IF( ISNULL(koneshdata.emiRFC) OR (LENGTH(TRIM(koneshdata.emiRFC)) = 0), metadata.rfcEmitter, koneshdata.emiRFC) AS rfcEmitter,
+            IF( ISNULL(koneshdata.recRFC) OR (LENGTH(TRIM(koneshdata.recRFC)) = 0), metadata.rfcReceiver, koneshdata.recRFC) AS rfcReceiver,
+            IF( ISNULL(koneshdata.folio) OR (LENGTH(TRIM(koneshdata.folio)) = 0), metadata.folio, koneshdata.folio) AS folio,
+            IF( ISNULL(koneshdata.serie) OR (LENGTH(TRIM(koneshdata.serie)) = 0), metadata.serie, koneshdata.serie) AS serie,
+            IF( koneshdata.total > 0, koneshdata.total, metadata.amount ) AS amount
+        FROM
+            cancellations
+        LEFT JOIN
+            koneshdata ON koneshdata.uuid = cfdiuuid
+        LEFT JOIN
+            metadata ON metadata.uuid = cfdiuuid
+        WHERE
+            response = 'Pendiente'
+        AND
+            curstage = 'PAC'
+        AND
+            cancellations.status IN(1,12);
+
+    END $$
+    DELIMITER ;
+
+-- SELECT document, cfdiuuid, curstage, receipt, updated, elapsed, status, usernameid FROM cancellations WHERE response = 'Pendiente' AND curstage = 'PAC' AND status IN(1,12);
+
+    DELIMITER $$
+    CREATE DEFINER = 'portaluser'@'localhost' PROCEDURE cancellations_viewsap
+    (
+        IN sapver   VARCHAR(4)
+    )
+    BEGIN
+
+        SELECT
+            c.cfdiuuid,
+            k.docDate   AS issueDate,
+            k.docType   AS cfditype,
+            k.emiRFC    AS rfcEmitter,
+            k.recRFC    AS rfcReceiver,
+            k.folio,
+            k.serie,
+            k.total     AS amount
+        FROM
+            cancellations c
+        INNER JOIN
+            koneshdata k ON k.uuid = c.cfdiuuid
+        WHERE
+            c.response = 'Pendiente'
+        AND
+            c.curstage = 'PAC'
+        AND
+            c.status IN(1,12)
+        AND
+            k.recRFC IN(SELECT crfc FROM companies WHERE sapversion = sapver)
+
+        UNION ALL
+
+        SELECT
+            c.cfdiuuid,
+            m.issueDate,
+            m.cfditype,
+            m.rfcEmitter,
+            m.rfcReceiver,
+            m.folio,
+            m.serie,
+            m.amount
+        FROM
+            cancellations c
+        INNER JOIN
+            metadata m ON m.uuid = c.cfdiuuid
+        LEFT JOIN
+            koneshdata k ON k.uuid = c.cfdiuuid
+        WHERE
+            c.response = 'Pendiente'
+        AND
+            c.curstage = 'PAC'
+        AND
+            c.status IN(1,12)
+        AND
+            m.rfcReceiver IN(SELECT crfc FROM companies WHERE sapversion = sapver);
+
+    END $$
+    DELIMITER ;
+
+    Replicación:
+
+    DROP PROCEDURE IF EXISTS cancellations_viewsap;
+    source cancellations_viewsap.sql
+
+4.- Deploy
+
+    Establecer variable de entorno de java.
+    Detener Servicio de Servidor de Aplicaciones Tomcat
+    Iniciar Servicio de Servidor de Aplicaciones Tomcat
+    Limpiar logs

@@ -184,7 +184,7 @@ public class CancellationsRepository
         }
     }
 
-    public List<Cfdi> saplist(Connection connection)
+    public List<Cfdi> saplist(Connection connection, String sapversion)
     {
         this.code = 0;
         this.error = null;
@@ -193,7 +193,8 @@ public class CancellationsRepository
 
         try
         {
-            CallableStatement sp = connection.prepareCall("{call cancellations_viewsap()}");
+            CallableStatement sp = connection.prepareCall("{call cancellations_viewsap(?)}");
+            sp.setString("sapver", sapversion);
             ResultSet rs = sp.executeQuery();
 
             for(;rs.next();)

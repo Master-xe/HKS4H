@@ -1,0 +1,84 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:gs="http://spring.io/guides/gs-producing-web-service">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <gs:sapDocumentsS4Request>
+         <gs:token>T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5t</gs:token>
+         <gs:document>
+            <gs:sgtxt>DB554FD3-60FF-4B1D-854E-061FE254906D</gs:sgtxt>
+            <gs:bstat>U</gs:bstat>
+            <gs:bukrs>169</gs:bukrs>
+            <gs:lifnr>0006041331</gs:lifnr>
+            <gs:ktokk>ZARR</gs:ktokk>
+            <gs:docim>000007679372</gs:docim>
+            <gs:clsim>AA_PO_MX</gs:clsim>
+            <gs:stsim>10</gs:stsim>
+            <gs:dscim>Obsoleto</gs:dscim>
+            <gs:belnr></gs:belnr>
+            <gs:blart>RE</gs:blart>
+            <gs:budat>20240716</gs:budat>
+            <gs:xblnr>FB2-6F1CB92474DC</gs:xblnr>
+            <gs:waers>MXN</gs:waers>
+            <gs:zlsch></gs:zlsch>
+            <gs:txtps>Prueba Unitaria SAP ECC S4H</gs:txtps>
+            <gs:augbl></gs:augbl>
+         </gs:document>
+         <gs:document>
+            <gs:sgtxt>98041E3B-6628-4AB2-805C-BB4D8C419580</gs:sgtxt>
+            <gs:bstat>U</gs:bstat>
+            <gs:bukrs>169</gs:bukrs>
+            <gs:lifnr>0004023103</gs:lifnr>
+            <gs:ktokk>Y001</gs:ktokk>
+            <gs:docim>000007695896</gs:docim>
+            <gs:clsim>AA_PO_MX</gs:clsim>
+            <gs:stsim>03</gs:stsim>
+            <gs:dscim>Enviado para la creación de documentos</gs:dscim>
+            <gs:belnr></gs:belnr>
+            <gs:blart>RE</gs:blart>
+            <gs:budat>20240724</gs:budat>
+            <gs:xblnr>DE1-E2AC136BD250</gs:xblnr>
+            <gs:waers>MXN</gs:waers>
+            <gs:zlsch></gs:zlsch>
+            <gs:txtps>Prueba Unitaria SAP ECC S4H</gs:txtps>
+            <gs:augbl></gs:augbl>
+         </gs:document>
+         <gs:document>
+            <gs:sgtxt>5ED40425-35D6-4CEF-9638-6E5F58162365</gs:sgtxt>
+            <gs:bstat>N</gs:bstat>
+            <gs:bukrs>169</gs:bukrs>
+            <gs:lifnr>0008009392</gs:lifnr>
+            <gs:ktokk></gs:ktokk>
+            <gs:docim>000000000000</gs:docim>
+            <gs:clsim></gs:clsim>
+            <gs:stsim></gs:stsim>
+            <gs:dscim></gs:dscim>
+            <gs:belnr>1800108054</gs:belnr>
+            <gs:blart>TQ</gs:blart>
+            <gs:budat>20240726</gs:budat>
+            <gs:xblnr>7000090485</gs:xblnr>
+            <gs:waers>MXN</gs:waers>
+            <gs:zlsch></gs:zlsch>
+            <gs:txtps>Prueba Unitaria SAP ECC S4H</gs:txtps>
+            <gs:augbl>0120318036</gs:augbl>
+         </gs:document>
+         <gs:document>
+            <gs:sgtxt>84B87446-DB31-4FD8-804A-CBAB88C94E56</gs:sgtxt>
+            <gs:bstat>U</gs:bstat>
+            <gs:bukrs>169</gs:bukrs>
+            <gs:lifnr>0006046349</gs:lifnr>
+            <gs:ktokk>ZARR</gs:ktokk>
+            <gs:docim>000007687769</gs:docim>
+            <gs:clsim>AA_PO_MX</gs:clsim>
+            <gs:stsim>10</gs:stsim>
+            <gs:dscim>Obsoleto</gs:dscim>
+            <gs:belnr></gs:belnr>
+            <gs:blart>RE</gs:blart>
+            <gs:budat>20240719</gs:budat>
+            <gs:xblnr>A47-821B2284D8C9</gs:xblnr>
+            <gs:waers>MXN</gs:waers>
+            <gs:zlsch></gs:zlsch>
+            <gs:txtps>Prueba Unitaria SAP ECC S4H</gs:txtps>
+            <gs:augbl></gs:augbl>
+         </gs:document>
+      </gs:sapDocumentsS4Request>
+   </soapenv:Body>
+</soapenv:Envelope>

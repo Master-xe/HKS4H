@@ -28,27 +28,27 @@ public class CfdisRepository
     @PostConstruct
     public void initData()
     {
-        genCfdis();
+        genCfdis("ECC");
     }
 
     public List<Cfdi> getCfdis()
     {
-        genCfdis();
+        genCfdis("ECC");
         return cfdis;
     }
 
     public List<Cfdi> getCfdisS4()
     {
-        genCfdis();
+        genCfdis("S4H");
         return cfdis;
     }
 
-    private void genCfdis()
+    private void genCfdis(String sapversion)
     {
         try
         {
             Connection connection = dataSource.getConnection();
-            cfdis = dao.saplist(connection);
+            cfdis = dao.saplist(connection, sapversion);
             try { connection.close(); } catch(SQLException e){}
         }   catch(SQLException e){}
     }
