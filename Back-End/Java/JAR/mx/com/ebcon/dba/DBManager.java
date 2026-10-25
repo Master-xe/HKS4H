@@ -175,16 +175,17 @@ public class DBManager
         }
     }
 
-    public boolean saveCancellationUUID(int requestid, String uuid)
+    public boolean saveCancellationUUID(int requestid, int hours, String uuid)
     {
         this.error = null;
         this.code = 0;
 
         try
         {
-            CallableStatement sp = connection.prepareCall("{call cancellation_insert(?,?)}");
+            CallableStatement sp = connection.prepareCall("{call cancellation_insert(?,?,?)}");
             sp.setInt("reqid", requestid);
             sp.setString("uuid", uuid);
+            sp.setInt("hours", hours);
             sp.executeUpdate();
             return true;
         }   catch(SQLException e)

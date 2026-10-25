@@ -171,7 +171,13 @@
     DROP PROCEDURE IF EXISTS cancellations_viewsap;
     source cancellations_viewsap.sql
 
-4.- Deploy
+5.- Mejoras
+
+    Proceso de Comunicación con Konesh
+
+    Implementar Nuevos Procedimientos Almacenados konesh.sql
+
+X.- Deploy
 
     Establecer variable de entorno de java.
     Detener Servicio de Servidor de Aplicaciones Tomcat

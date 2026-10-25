@@ -9,11 +9,16 @@ $JAVA_HOME/bin/javac UnzipDownloads.java
 $JAVA_HOME/bin/javac CancellationRequests.java
 $JAVA_HOME/bin/javac CancellationResponses.java
 
-$JAVA_HOME/bin/javac -cp ".:$CLASSPATH" AppDM.java
-#$JAVA_HOME/bin/java -cp ".:$CLASSPATH" AppDM > AppDM.log &
+$JAVA_HOME/bin/javac -cp ".:$CLASSPATH" KoneshIntegratorService.java
+#$JAVA_HOME/bin/java -cp ".:$CLASSPATH" KoneshIntegratorService > KoneshIntegratorService.log
 
 #50 * * * 1-5 sh /opt/portalcfdi/Cancellations.sh
 #20 * * * 1-5 sh /opt/portalcfdi/UnzipDownloads.sh
-#0 * * * 1-5 sh /opt/portalcfdi/CancellationRequests.sh
-#0 12 * * 6,0 sh /opt/portalcfdi/CancellationRequests.sh
+#0 2 * * 1-5 sh /opt/portalcfdi/CancellationRequests.sh
+#0 8 * * 1-5 sh /opt/portalcfdi/CancellationRequests.sh
+#0 10 * * 1-5 sh /opt/portalcfdi/CancellationRequests.sh
+#0 12 * * 1-5 sh /opt/portalcfdi/CancellationRequests.sh
+#0 14 * * 1-5 sh /opt/portalcfdi/CancellationRequests.sh
+#0 16 * * 1-5 sh /opt/portalcfdi/CancellationRequests.sh
+#0 19 * * 1-5 sh /opt/portalcfdi/CancellationRequests.sh
 #10 * * * 1-5 sh /opt/portalcfdi/CancellationResponses.sh

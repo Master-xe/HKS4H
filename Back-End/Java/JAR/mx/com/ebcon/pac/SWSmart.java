@@ -143,7 +143,7 @@ public class SWSmart
                         acuse = data.getString("acuse");
                         this.LogFile(this.uid + "-acuse.xml", acuse);
                     }
-                }   catch(JSONException je){ System.out.println(je.getMessage); }
+                }   catch(JSONException je){ System.out.println(je.getMessage()); }
             }
         }   catch(MalformedURLException e)
         {

@@ -1,10 +1,12 @@
 
 import java.util.Map;
-import java.sql.SQLException;
+
 import mx.com.ebcon.pac.SWSmart;
 import mx.com.ebcon.pac.Response;
 import mx.com.ebcon.utils.LogFile;
 import mx.com.ebcon.dba.DBManager;
+
+import java.sql.SQLException;
 import javax.sql.rowset.CachedRowSet;
 
 public class CancellationRequests
@@ -42,7 +44,20 @@ public class CancellationRequests
         Response rs = null;
         String rfc = null;
         int requestid = 0;
+        int hours = 2;
         int cid = 0;
+
+        if( args.length > 0 )
+        {
+            hours = switch( args[0] )
+            {
+                case "02" -> 7;
+                case "08" -> 6;
+                case "19" -> 3;
+                case "10", "12", "14", "16" -> 2;
+                default -> 8;
+            };
+        }
 
         try
         {
@@ -59,7 +74,7 @@ public class CancellationRequests
                 {
                     for(int i=0; i<rs.uuids.size(); i++)
                     {
-                        db.saveCancellationUUID(requestid, rs.uuids.get(i));
+                        db.saveCancellationUUID(requestid, hours, rs.uuids.get(i));
                     }
                 }
             }

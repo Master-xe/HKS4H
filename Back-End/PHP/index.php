@@ -21,7 +21,7 @@ if( $_SERVER['REQUEST_METHOD'] !== 'POST' )
 }
 // 2. Obtener y validar el token Bearer
 $_token = getBearerToken();
-$token = 'tu_token_secreto_12345';
+$token = '{tokenizer}';
 
 if( !$_token || $_token !== $token )
 {
