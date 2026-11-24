@@ -1,7 +1,4 @@
 #!/bin/bash
-
 export CLASSPATH=/opt/portalcfdi/
-export JAVA_HOME=/usr/local/java/jdk-17.0.5
-
-$JAVA_HOME/bin/javac -cp ".:$CLASSPATH" *.java
-
+export JAVA_HOME=/usr/local/java/jdk-25.0.5.0.3
+$JAVA_HOME/bin/javac -cp ".:$CLASSPATH" -Xlint:deprecation *.java

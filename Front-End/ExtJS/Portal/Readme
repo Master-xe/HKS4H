@@ -1,10 +1,15 @@
-
 $mkdir Portal
-$cd Portal
-$sencha app init --ext@7.6.0 --classic Portal
-$grep data-app index.html
-#copy uuid from above
-#copy file
-#fill data-app id in app.json & index.html files
+$sencha -sdk /home/master/Documents/ext-7.7.0 generate app --classic Portal ./Portal
+
+#$cd Portal
+#$sencha app init --ext@7.6.0 --classic Portal
+
+$grep data-app Portal/index.html
+
+#copy uuid
+#copy files
+#fill data-app id in files app.json & index.html
 #move ext/packages/ux/classic/src/ProgressBarPager.js -> ext/classic/classic/src/ProgressBarPager.js
+
 $sencha app watch
+$sencha app build

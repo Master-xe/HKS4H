@@ -31,6 +31,8 @@ CREATE DEFINER = 'portaluser'@'localhost' PROCEDURE company_update
 (
     IN xcid INTEGER UNSIGNED,
     IN pswd VARCHAR(99),
+    IN csdf VARCHAR(11),
+    IN fiel VARCHAR(12),
     IN stat VARCHAR(1),
     IN fcsd BLOB,
     IN fpfx BLOB
@@ -41,15 +43,15 @@ BEGIN
         UPDATE companies SET cpswd = pswd WHERE cid = xcid;
     END IF;
 
-    IF( fpfx IS NOT NULL ) THEN
-        UPDATE companies SET cfile = fpfx WHERE cid = xcid;
-    END IF;
-
     IF( fcsd IS NOT NULL ) THEN
         UPDATE companies SET csdfl = fcsd WHERE cid = xcid;
     END IF;
 
-    UPDATE companies SET clock = stat, cupdt = now() WHERE cid = xcid;
+    IF( fpfx IS NOT NULL ) THEN
+        UPDATE companies SET cfile = fpfx WHERE cid = xcid;
+    END IF;
+
+    UPDATE companies SET clock = stat, expires = csdf, expires2 = fiel, cupdt = now() WHERE cid = xcid;
 
 END $$
 DELIMITER ;

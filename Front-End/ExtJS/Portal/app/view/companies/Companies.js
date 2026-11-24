@@ -58,7 +58,7 @@ Ext.define('Portal.view.companies.Companies', {
         text: "Sociedad",
         dataIndex: 'ccode',
         sortable: true,
-        width: 200
+        width: 100
     },{
         text: "Nombre",
         dataIndex: 'cname',
@@ -77,6 +77,16 @@ Ext.define('Portal.view.companies.Companies', {
     },{
         text: "Actualizada",
         dataIndex: 'cupdt',
+        sortable: false,
+        width: 175
+    },{
+        text: "Vigencia CSD",
+        dataIndex: 'expires',
+        sortable: false,
+        width: 175
+    },{
+        text: "Vigencia FIEL",
+        dataIndex: 'expires2',
         sortable: false,
         width: 175
     },{

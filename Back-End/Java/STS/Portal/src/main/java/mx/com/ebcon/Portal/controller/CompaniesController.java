@@ -108,21 +108,6 @@ public class CompaniesController
             return new JResponse(500, -1, "SRV", "Acceso Denegado");
         }
 
-        if( company.getFlpfx() != null && !company.getFlpfx().isBlank() )
-        {
-            int pointer = company.getFlpfx().indexOf(44) + 1;
-            company.setFlpfx(company.getFlpfx().substring(pointer));
-
-            try
-            {
-                byte[] bytes = Base64.getDecoder().decode(company.getFlpfx());
-                fpfx = new ByteArrayInputStream(bytes); bytes = null;
-            }   catch(IllegalArgumentException e)
-            {
-                return new JResponse(500, -1, "SRV", "Error con la FIEL: " + e.getMessage());
-            }
-        }
-
         if( company.getFlcsd() != null && !company.getFlcsd().isBlank() )
         {
             int pointer = company.getFlcsd().indexOf(44) + 1;
@@ -138,6 +123,24 @@ public class CompaniesController
             }
         }
 
+        if( company.getFlpfx() != null && !company.getFlpfx().isBlank() )
+        {
+            int pointer = company.getFlpfx().indexOf(44) + 1;
+            company.setFlpfx(company.getFlpfx().substring(pointer));
+
+            try
+            {
+                byte[] bytes = Base64.getDecoder().decode(company.getFlpfx());
+                fpfx = new ByteArrayInputStream(bytes); bytes = null;
+            }   catch(IllegalArgumentException e)
+            {
+                return new JResponse(500, -1, "SRV", "Error con la FIEL: " + e.getMessage());
+            }
+        }
+
+        company.setExpires(Utils.getPFXDate(fcsd, company.getCpswd()));
+        company.setExpires2(Utils.getPFXDate(fpfx, company.getCpswd()));
+
         try
         {
             connection = dataSource.getConnection();
@@ -146,7 +149,7 @@ public class CompaniesController
             return new JResponse(e.getErrorCode(), -1, "SQL", e.getMessage());
         }
 
-        if(!companiesDAO.update(connection, company.getCid(), company.getCpswd(), company.getClock(), fcsd, fpfx))
+        if(!companiesDAO.update(connection, company.getCid(), company.getCpswd(), company.getExpires(), company.getExpires2(), company.getClock(), fcsd, fpfx))
         {   try { connection.close(); } catch(SQLException e){}
             return new JResponse(companiesDAO.getCode(), -1, "SQL", companiesDAO.getError());
         }   try { connection.close(); } catch(SQLException e){}

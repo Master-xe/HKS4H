@@ -72,7 +72,7 @@ public class CompaniesRepository
         }
     }
 
-    public boolean update(Connection connection, int company, String password, String locked, InputStream fpfx, InputStream fcsd)
+    public boolean update(Connection connection, int company, String password, String expires, String expires2, String locked, InputStream fcsd, InputStream fpfx)
     {
         this.code = 0;
         this.error = null;
@@ -90,13 +90,15 @@ public class CompaniesRepository
 
         try
         {
-            CallableStatement sp = connection.prepareCall("{call company_update(?,?,?,?,?)}");
+            CallableStatement sp = connection.prepareCall("{call company_update(?,?,?,?,?,?,?)}");
 
             sp.setInt("xcid", company);
             sp.setString("stat", locked);
 
             if( fcsd == null ){ sp.setNull("fcsd", Types.BINARY); } else { sp.setBinaryStream("fcsd", fcsd); }
             if( fpfx == null ){ sp.setNull("fpfx", Types.BINARY); } else { sp.setBinaryStream("fpfx", fpfx); }
+            if( expires == null ){ sp.setNull("pswd", Types.VARCHAR); } else { sp.setString("pswd", expires); }
+            if( expires2 == null ){ sp.setNull("pswd", Types.VARCHAR); } else { sp.setString("pswd", expires2); }
             if( password == null ){ sp.setNull("pswd", Types.VARCHAR); } else { sp.setString("pswd", password); }
 
             sp.executeUpdate();
@@ -148,6 +150,8 @@ public class CompaniesRepository
                 company.setCname(rs.getString("cname"));
                 company.setCupdt(rs.getString("cupdt"));
                 company.setRtype(rs.getString("reqtype"));
+                company.setExpires(rs.getString("expires"));
+                company.setExpires2(rs.getString("expires2"));
                 companies.add(company);
             }
 

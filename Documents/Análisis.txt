@@ -174,8 +174,19 @@
 5.- Mejoras
 
     Proceso de Comunicación con Konesh
+    Implementar Nuevos Procedimientos Almacenados
 
-    Implementar Nuevos Procedimientos Almacenados konesh.sql
+    source konesh.sql
+
+    cancellation_save_complete
+    konesh_claim_pending_uuid
+    konesh_request_complete
+    konesh_claim_uuid
+
+    application.properties
+
+    https://heinekenqa.cfdinova.com.mx/axis2/services/KWSInformacionComplementariaSAPECC
+    http://beans.kwservice.heineken.mx.konesh.com/xsd,http://pool2.db.mx.konesh.com/xsd
 
 X.- Deploy
 

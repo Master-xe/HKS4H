@@ -1,8 +1,9 @@
 
-DELIMITER $$
-CREATE DEFINER = 'portaluser'@'localhost' PROCEDURE cancellation_insert
+DELIMITER ;;
+CREATE DEFINER = portaluser@localhost PROCEDURE cancellation_insert
 (
     reqid   INTEGER UNSIGNED,
+    hours   INTEGER UNSIGNED,
     uuid    VARCHAR(36)
 )
 BEGIN
@@ -10,15 +11,22 @@ BEGIN
     SELECT @lastid := MAX(requestp) FROM cancellations WHERE cfdiuuid = uuid;
 
     IF( @lastid IS NULL ) THEN
-        INSERT INTO cancellations(requestp, cfdiuuid) VALUES(reqid, uuid);
+        INSERT INTO cancellations(requestp, cfdiuuid, elapsed) VALUES(reqid, uuid, hours);
     ELSE
         SELECT @replied := receipt, @estatus := status FROM cancellations WHERE requestp = @lastid AND cfdiuuid = uuid;
+
         IF( @replied = 'Y' ) THEN
-            INSERT INTO cancellations(requestp, cfdiuuid, curstage, status) VALUES(reqid, uuid, 'USR', @estatus);
+            INSERT INTO cancellations(requestp, cfdiuuid, curstage, status, elapsed) VALUES(reqid, uuid, 'USR', @estatus, hours);
         END IF;
     END IF;
 
-END $$
+    SELECT @_uuid := cfdiuuid FROM uuidsentreq WHERE cfdiuuid = uuid;
+
+    IF( @_uuid IS NULL ) THEN
+        INSERT INTO uuidsentreq(requestp, cfdiuuid) VALUES(reqid, uuid);
+    END IF;
+
+END ;;
 DELIMITER ;
 
 DELIMITER $$

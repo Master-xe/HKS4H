@@ -14,6 +14,8 @@ public class Company
     private String flcsd;
     private String flpfx;
     private String rtype;
+    private String expires;
+    private String expires2;
 
     public Company(){}
 
@@ -28,6 +30,8 @@ public class Company
     public String getFlcsd(){ return this.flcsd; }
     public String getFlpfx(){ return this.flpfx; }
     public String getRtype(){ return this.rtype; }
+    public String getExpires(){ return this.expires; }
+    public String getExpires2(){ return this.expires2; }
 
     public void setCid(int cid){ this.cid = cid; }
     public void setCrfc(String value){ this.crfc = value; }
@@ -40,5 +44,6 @@ public class Company
     public void setFlcsd(String value){ this.flcsd = value; }
     public void setFlpfx(String value){ this.flpfx = value; }
     public void setRtype(String value){ this.rtype = value; }
+    public void setExpires(String value){ this.expires = value; }
+    public void setExpires2(String value){ this.expires2 = value; }
 }
-

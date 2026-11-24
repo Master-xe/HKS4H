@@ -15,8 +15,11 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URISyntaxException;
+import java.net.MalformedURLException;
 import javax.net.ssl.HttpsURLConnection;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -33,48 +36,59 @@ public class KoneshLibService
 {
     private final String[] ns;
     private final String endPoint;
+    private final int koneshSetReadTimeout;
+    private final int koneshSetConnectTimeout;
 
     public KoneshLibService()
     {
         this.endPoint =  Config.get("konesh.endpoint");
+        this.koneshSetReadTimeout = Integer.parseInt(Config.get("konesh.set-read-timeout"));
+        this.koneshSetConnectTimeout = Integer.parseInt(Config.get("konesh.set-connect-timeout"));
         this.ns = Config.get("konesh.nodes.ns").split(",") ;
     }
     
     private String request(String soapRequest) throws NullPointerException, IOException
     {// System.setProperty("javax.net.ssl.trustStore", "trust-store.jks"); System.setProperty("javax.net.ssl.trustStorePassword", "TrustStore");
-        
-        URL url = new URL(this.endPoint);
-        URLConnection connection = url.openConnection();
-        HttpsURLConnection https = (HttpsURLConnection)connection;
-        https.setHostnameVerifier(new UntrustedSite());
-        https.setRequestProperty("Content-Type","application/soap+xml; charset=UTF-8");
-        https.setRequestProperty("SOAPAction","urn:obtieneInfoCFDIs");/*
-        https.setRequestProperty("Content-Length","length");*/
-        https.setRequestMethod("POST");
-        https.setUseCaches(false);
-        https.setDoOutput(true);
-       
-        OutputStream ostream = https.getOutputStream();
-        DataOutputStream dostream = new DataOutputStream(ostream);
+        try
+        {        
+            URL url = new URI(this.endPoint).toURL();
+            URLConnection connection = url.openConnection();
+            HttpsURLConnection https = (HttpsURLConnection)connection;
+            https.setHostnameVerifier(new UntrustedSite());
+            https.setRequestProperty("Content-Type","application/soap+xml; charset=UTF-8");
+            https.setRequestProperty("SOAPAction","urn:obtieneInfoCFDIs");/*
+            https.setRequestProperty("Content-Length","length");*/
+            https.setConnectTimeout(this.koneshSetConnectTimeout);
+            https.setReadTimeout(this.koneshSetReadTimeout);
+            https.setRequestMethod("POST");
+            https.setUseCaches(false);
+            https.setDoOutput(true);
+           
+            OutputStream ostream = https.getOutputStream();
+            DataOutputStream dostream = new DataOutputStream(ostream);
 
-        dostream.writeBytes(soapRequest);
-        dostream.flush();
-        dostream.close();
+            dostream.writeBytes(soapRequest);
+            dostream.flush();
+            dostream.close();
 
-        final int code = https.getResponseCode();
+            final int code = https.getResponseCode();
 
-        InputStream istream = (code == 200) ? https.getInputStream() : https.getErrorStream();
-        InputStreamReader isreader = new InputStreamReader(istream);
-        BufferedReader buffer = new BufferedReader(isreader);
-        String text = "", line = buffer.readLine();
+            InputStream istream = (code == 200) ? https.getInputStream() : https.getErrorStream();
+            InputStreamReader isreader = new InputStreamReader(istream);
+            BufferedReader buffer = new BufferedReader(isreader);
+            String text = "", line = buffer.readLine();
 
-        while( line != null )
-        {
-            text += line;
-            line = buffer.readLine();
-        }   
-        
-        return text;
+            while( line != null )
+            {
+                text += line;
+                line = buffer.readLine();
+            }   System.out.println(text);
+
+            return text;
+        }   catch(URISyntaxException | MalformedURLException e)
+        {   System.out.println("KoneshLibService.request: " + e.getMessage());
+            return e.getMessage();
+        }
     }
 
     private Document getXMLDocument(String xmlString) throws ParserConfigurationException , SAXException , IOException
@@ -94,16 +108,19 @@ public class KoneshLibService
 
         DocumentBuilder builder = factory.newDocumentBuilder();
         
-        try (StringReader reader = new StringReader(xmlString)) {
-                InputSource source = new InputSource(reader);
-
-                return builder.parse(source);
-        } catch (IOException | SAXException e) {
-            throw new IllegalArgumentException(e.getMessage() );
+        try(StringReader reader = new StringReader(xmlString))
+        {
+            InputSource source = new InputSource(reader);
+            return builder.parse(source);
+        }   catch(IOException | SAXException e)
+        {
+            System.out.println("KoneshLibService.getXMLDocument: " + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
         
-    public List<CFDIRecepcion> getUuidData(String uuid) throws Exception{
+    public List<CFDIRecepcion> getUuidData(String uuid) throws Exception
+    {
         List<CFDIRecepcion> resultadoCFDI = new ArrayList<>();
         String namespace = ""; // String xml = "<>";
         
@@ -112,20 +129,25 @@ public class KoneshLibService
         NodeList nlCfdis = null;
         Element element = null;
        
-        if (doc != null){
+        if( doc != null )
+        {
             doc.getDocumentElement().normalize();
             
-            for( String n: ns  ){
+            for( String n: ns )
+            {
                 nlCfdis = doc.getElementsByTagNameNS(n, "cfdis");
                 
-                if (nlCfdis.getLength()>0){
+                if( nlCfdis.getLength()>0 )
+                {
                     namespace = n;
                     break;
                 }
             }
             
-            if (nlCfdis != null && nlCfdis.getLength()>0){
-                for (int i = 0; i< nlCfdis.getLength(); i++){
+            if( nlCfdis != null && nlCfdis.getLength()>0 )
+            {
+                for(int i = 0; i< nlCfdis.getLength(); i++)
+                {
                     element = (Element)nlCfdis.item(i);
                     
                     resultadoCFDI.add( new CFDIRecepcion(
@@ -148,29 +170,29 @@ public class KoneshLibService
                     ));
                 }
             }
-        }else{
+        }   else
+        {
+            System.out.println("KoneshLibService.getUuidData: No se obtuvo respuesta de Konesh o el formato no es el esperado.");
             throw new Exception("No se pudo generar el XML.");
         }
         
         return resultadoCFDI;
     }
     
-    private static String getValue(
-        Element parent,
-        String namespace,
-        String tagName) {
+    private static String getValue(Element parent, String namespace, String tagName)
+    {
+        NodeList nodes = parent.getElementsByTagNameNS(namespace, tagName);
 
-        NodeList nodes =
-            parent.getElementsByTagNameNS(namespace, tagName);
-
-        if (nodes.getLength() == 0) {
+        if( nodes.getLength() == 0 )
+        {
             return null;
         }
 
         return nodes.item(0).getTextContent();
     }
     
-    private String createTemplateRequest(String UUIDs) throws Exception {
+    private String createTemplateRequest(String UUIDs) throws Exception
+    {
         String pre = "<soap:Envelope xmlns:soap=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:kws=\"http://kwservice.heineken.mx.konesh.com\" xmlns:xsd=\"http://beans.kwservice.heineken.mx.konesh.com/xsd\">" +
                             "   <soap:Header/>" +
                             "   <soap:Body>" +

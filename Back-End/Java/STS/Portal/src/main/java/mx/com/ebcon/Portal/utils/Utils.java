@@ -1,12 +1,13 @@
 
 package mx.com.ebcon.Portal.utils;
 
-import java.time.format.DateTimeFormatter;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 
 import java.io.FileWriter;
+import java.io.InputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.BufferedReader;
@@ -83,6 +84,20 @@ public class Utils
             aux += special.charAt(rand.nextInt(special.length()));
             string += aux.charAt(rand.nextInt(aux.length())); aux = "";
         }   return string;
+    }
+
+    public static String getPFXDate(InputStream pfx, String pswd)
+    {
+        if( pfx == null || pswd == null || pswd.isBlank() ){ return null; }
+
+        try
+        {
+            PFXData.EntityData pfxdata = PFXData.extract(pfx, pswd.toCharArray());
+            return LocalDate.ofInstant(pfxdata.valid_upto(), ZoneOffset.UTC).toString();
+        }   catch(Exception e)
+        {
+            return null;
+        }
     }
 
     public static String sendMail(String address, String username, String password, String token)
