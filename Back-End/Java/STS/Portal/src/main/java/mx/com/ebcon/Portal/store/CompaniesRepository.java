@@ -97,8 +97,8 @@ public class CompaniesRepository
 
             if( fcsd == null ){ sp.setNull("fcsd", Types.BINARY); } else { sp.setBinaryStream("fcsd", fcsd); }
             if( fpfx == null ){ sp.setNull("fpfx", Types.BINARY); } else { sp.setBinaryStream("fpfx", fpfx); }
-            if( expires == null ){ sp.setNull("pswd", Types.VARCHAR); } else { sp.setString("pswd", expires); }
-            if( expires2 == null ){ sp.setNull("pswd", Types.VARCHAR); } else { sp.setString("pswd", expires2); }
+            if( expires == null ){ sp.setNull("csdf", Types.VARCHAR); } else { sp.setString("csdf", expires); }
+            if( expires2 == null ){ sp.setNull("fiel", Types.VARCHAR); } else { sp.setString("fiel", expires2); }
             if( password == null ){ sp.setNull("pswd", Types.VARCHAR); } else { sp.setString("pswd", password); }
 
             sp.executeUpdate();

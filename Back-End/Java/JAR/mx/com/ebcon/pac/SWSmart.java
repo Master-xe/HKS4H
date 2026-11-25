@@ -1,6 +1,7 @@
 
 package mx.com.ebcon.pac;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.List;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.io.BufferedReader;
 import java.net.URLConnection;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.net.MalformedURLException;
 import javax.net.ssl.HttpsURLConnection;
 import org.json.JSONException;
@@ -83,7 +85,7 @@ public class SWSmart
 
         try
         {
-            URL url = new URL(endpoint);
+            URL url = new URI(endpoint).toURL();
             URLConnection connection = url.openConnection();
             HttpsURLConnection https = (HttpsURLConnection)connection;
             https.setRequestProperty("Authorization", "Bearer " + token);
@@ -145,7 +147,7 @@ public class SWSmart
                     }
                 }   catch(JSONException je){ System.out.println(je.getMessage()); }
             }
-        }   catch(MalformedURLException e)
+        }   catch(MalformedURLException | URISyntaxException e)
         {
             message = "MalformedURLException";
             detail = e.getMessage();
@@ -169,6 +171,9 @@ public class SWSmart
         try
         {
             java.io.FileWriter fw = new java.io.FileWriter("/opt/portalcfdi/downloads/" + filename, true); fw.write(content); fw.close();
-        }   catch(IOException e){ System.out.println(e.getMessage()); }
+        }   catch(IOException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 }
